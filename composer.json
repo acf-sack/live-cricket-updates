@@ -1,0 +1,12 @@
+{
+    "name": "acf-sack/live-cricket-updates",
+    "authors": [
+        {
+            "name": "Antonian Computer Fraternity, St. Anthony's College",
+            "email": "sack.cf.ict@gmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "^3.0"
+    }
+}
