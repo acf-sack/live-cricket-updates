@@ -10,9 +10,22 @@ $app = new \Slim\App([
 ]);
 
 
-$app->get('/hello', function ($request, $response, $args) {
+$app->get('/', function ($request, $response, $args) {
 
-    return $response->withStatus(201)->withJson(["hello" =>"world"]);
+    $array = [];
+
+    $array[] = "hi";
+    $array[] = "hooi";
+    $array[] = "babi";
+
+    return $response->withStatus(201)->withJson($array);
+
+});
+
+
+$app->get('/piumal', function ($request, $response, $args) {
+
+    return $response->withStatus(201)->withJson(["score" =>23, "overs"=>13]);
 
 });
 
