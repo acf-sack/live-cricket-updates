@@ -142,6 +142,86 @@ $app->post('/extra-team-score', function ($request, $response, $args) {
     return $response->withStatus(201)->withJson(["id"=>$id])   ;
 });
 
+//update players
+
+$app->post('/update-player', function ($request, $response, $args) {
+    global $con;
+
+    if($request->getAttribute("type") != "admin"){
+        return $response->withStatus(403);
+    }
+
+    $bowlerPlayerId = $request->getParsedBodyParam('bowler_player_id', '');
+    $strikerPlayerId = $request->getParsedBodyParam('striker_player_id', '');
+    $nonStrikerPlayerId = $request->getParsedBodyParam('non_striker_player_id', '');
+
+    addCurrentDetails($bowlerPlayerId,$strikerPlayerId,$nonStrikerPlayerId);
+
+    return $response->withStatus(201);
+});
+
+//score insert
+
+$app->post('/scores', function ($request, $response, $args) {
+    global $con;
+
+    if($request->getAttribute("type") != "admin"){
+        return $response->withStatus(403);
+    }
+
+    $teamId = $request->getParsedBodyParam('team_id', '');
+    $inning = $request->getParsedBodyParam('inning', '');
+    $batsmanPlayerId = $request->getParsedBodyParam('batsman_player_id', '');
+    $bowlerPlayerId = $request->getParsedBodyParam('bowler_player_id', '');
+    $over = $request->getParsedBodyParam('over', '');
+    $ball = $request->getParsedBodyParam('ball', '');
+    $score = $request->getParsedBodyParam('score', '');
+
+    $con->query("INSERT INTO score(team_id, inning, batsman_player_id, bowler_player_id, over, ball, score) VALUES ('$teamId','$inning','$batsmanPlayerId','$bowlerPlayerId','$over','$ball','$score')");
+
+    return $response->withStatus(201);
+});
+
+//score delete
+
+$app->delete('/scores/{id}', function ($request, $response, $args) {
+    global $con;
+
+    if($request->getAttribute("type") != "admin"){
+        return $response->withStatus(403);
+    }
+
+    $id = $args["id"];
+
+    $con->query("DELETE FROM score WHERE id = $id");
+
+    return $response->withStatus(201);
+});
+
+//score update
+
+$app->update('/scores/{id}', function ($request, $response, $args) {
+    global $con;
+
+    if($request->getAttribute("type") != "admin"){
+        return $response->withStatus(403);
+    }
+
+    $id = $args["id"];
+
+    $teamId = $request->getParsedBodyParam('team_id', '');
+    $inning = $request->getParsedBodyParam('inning', '');
+    $batsmanPlayerId = $request->getParsedBodyParam('batsman_player_id', '');
+    $bowlerPlayerId = $request->getParsedBodyParam('bowler_player_id', '');
+    $over = $request->getParsedBodyParam('over', '');
+    $ball = $request->getParsedBodyParam('ball', '');
+    $score = $request->getParsedBodyParam('score', '');
+
+
+    $con->query("DELETE FROM score WHERE id = $id");
+
+    return $response->withStatus(201);
+});
 
 try {
     $app->run();
