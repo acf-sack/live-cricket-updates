@@ -108,6 +108,42 @@ INSERT INTO `extra_team_score` VALUES (1,1,1,10,'wd',4),(2,1,1,10,'wd',4);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `plane`
+--
+
+DROP TABLE IF EXISTS `plane`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `plane` (
+  `id` int(11) NOT NULL,
+  `a` varchar(45) DEFAULT NULL,
+  `b` varchar(45) DEFAULT NULL,
+  `c` varchar(45) DEFAULT NULL,
+  `d` varchar(45) DEFAULT NULL,
+  `e` varchar(45) DEFAULT NULL,
+  `f` varchar(45) DEFAULT NULL,
+  `g` varchar(45) DEFAULT NULL,
+  `h` varchar(45) DEFAULT NULL,
+  `i` varchar(45) DEFAULT NULL,
+  `j` varchar(45) DEFAULT NULL,
+  `k` varchar(45) DEFAULT NULL,
+  `l` varchar(45) DEFAULT NULL,
+  `m` varchar(45) DEFAULT NULL,
+  `n` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `plane`
+--
+
+LOCK TABLES `plane` WRITE;
+/*!40000 ALTER TABLE `plane` DISABLE KEYS */;
+/*!40000 ALTER TABLE `plane` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `player`
 --
 
@@ -258,4 +294,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-08  4:09:53
+-- Dump completed on 2019-03-08  4:47:09
