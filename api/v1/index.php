@@ -111,13 +111,35 @@ $app->post('/current-details', function ($request, $response, $args) {
 
     $_result = $con->query("SELECT * FROM current_detail WHERE id=1");
 
-    if($_result->num_rows = 1){
+    if($_result->num_rows == 1){
         $con->query("INSERT INTO current_detail(team_id,inning) VALUES ('$teamId', '$inning')");
     }else{
         $con->query("INSERT INTO current_detail(id, team_id, inning ) VALUES ('1','$teamId', '$inning')");
     }
 
-    return $response->withStatus(200)->withJson([1]);
+    return $response->withStatus(200)   ;
+});
+
+//extra team score
+
+$app->post('/extra-team-score', function ($request, $response, $args) {
+    global $con;
+
+    if($request->getAttribute("type") != "admin"){
+        return $response->withStatus(403);
+    }
+
+    $inning = $request->getParsedBodyParam('inning', '');
+    $teamId = $request->getParsedBodyParam('team_id', '');
+    $over = $request->getParsedBodyParam('over', '');
+    $type = $request->getParsedBodyParam('type', '');
+    $score = $request->getParsedBodyParam('score', '');
+
+    $con->query("INSERT INTO extra_team_score(team_id, inning, over, type, score) VALUES ('$teamId', '$inning', '$over', '$type', '$score')");
+
+    $id = $con->insert_id;
+
+    return $response->withStatus(201)->withJson(["id"=>$id])   ;
 });
 
 
@@ -136,4 +158,9 @@ function setSession($type, $id, $displayName)
     $_SESSION['type'] = $type;
     $_SESSION['id'] = $id;
     $_SESSION['displayName'] = $displayName;
+}
+
+function addCurrentDetails($bowler, $striker, $nonStriker){
+    global $con;
+    $con->query("INSERT INTO current_detail(bowler_player_id, striker_player_id, batsman2_player_id) VALUES ('$bowler', '$striker', '$nonStriker')");
 }
