@@ -1,9 +1,7 @@
 <?php
 
 require '../../vendor/autoload.php';
-include "conf/connection.php";
 
-use LiveCricket\Middleware\Authentication as LiveAuth;
 
 $app = new \Slim\App([
     'settings' => [
@@ -11,10 +9,9 @@ $app = new \Slim\App([
     ]
 ]);
 
-$app->add(new LiveAuth());
 
-$app->get('/hello', function ($request, $response, $args) {
-//    echo $request->getAttribute('type');
+$app->get('/', function ($request, $response, $args) {
+
     $array = [];
 
     $array[] = "hi";
