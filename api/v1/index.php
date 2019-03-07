@@ -13,15 +13,22 @@ $app = new \Slim\App([
 
 $app->add(new LiveAuth());
 
-$app->get('/hello', function ($request, $response, $args) {
+$app->get('/teams', function ($request, $response, $args) {
 //    echo $request->getAttribute('type');
-    $array = [];
 
-    $array[] = "hi";
-    $array[] = "hooi";
-    $array[] = "babi";
+    global $con;
+    $_teams = $con->query("SELECT id,name FROM team WHERE status=1");
 
-    return $response->withStatus(201)->withJson($array);
+
+    $teams = [];
+
+    while ($team= $_teams->fetch_assoc()){
+        $teams[] = $team;
+    }
+
+
+
+    return $response->withStatus(201)->withJson($teams);
 
 });
 
