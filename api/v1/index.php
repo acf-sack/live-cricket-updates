@@ -51,6 +51,23 @@ $app->post('/login', function ($request, $response, $args) {
     return $response->withStatus(200)->withJson($payload);
 });
 
+//get current details
+
+$app->get('/current-details', function ($request, $response, $args) {
+    global $con;
+
+    $_current_details = $con->query("SELECT team_id,inning FROM current_detail");
+
+    $payload = [];
+
+    if($_current_details->num_rows>0){
+        $payload = $_current_details->fetch_assoc();
+    }
+
+
+    return $response->withStatus(200)->withJson($payload);
+});
+
 try {
     $app->run();
 } catch (\Slim\Exception\MethodNotAllowedException $e) {
