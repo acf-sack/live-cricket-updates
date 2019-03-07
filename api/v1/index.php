@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require '../../vendor/autoload.php';
 include "conf/connection.php";
 
@@ -66,6 +66,35 @@ $app->get('/current-details', function ($request, $response, $args) {
 
 
     return $response->withStatus(200)->withJson($payload);
+});
+
+// add wicket
+
+$app->post('/wickets', function ($request, $response, $args) {
+
+    global $con;
+
+    echo ($request->getAttribute('type'));
+
+//    if ($request->getAttribute('type') != 'admin') {
+//        return $response->withStatus(403);
+//    }
+//
+//    $batsmanPlayerId = $request->getParsedBodyParam('batsman_player_id', '');
+//    $bowlerPlayerId = $request->getParsedBodyParam('bowler_player_id', '');
+//    $dType = $request->getParsedBodyParam('d_type', '');
+//
+//    $isExecuted = $con->query("INSERT INTO wicket(batsman_player_id, bowler_player_id, inning, d_type) VALUES ('$batsmanPlayerId', '$bowlerPlayerId', '$dType')");
+//
+//    if($isExecuted){}
+//
+//
+//
+//    if ($isExecuted) {
+//        $payload = ['id' => $con->insert_id];
+//        return $response->withStatus(200)->withJson($payload);
+//    }
+    return $response->withStatus(200);
 });
 
 try {
