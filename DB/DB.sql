@@ -11,10 +11,10 @@ USE `live_cricket_updates`;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE=''+00:00'' */;
+/*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE=''NO_AUTO_VALUE_ON_ZERO'' */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
@@ -103,7 +103,7 @@ CREATE TABLE `extra_team_score` (
 
 LOCK TABLES `extra_team_score` WRITE;
 /*!40000 ALTER TABLE `extra_team_score` DISABLE KEYS */;
-INSERT INTO `extra_team_score` VALUES (1,1,1,10,''wd'',4),(2,1,1,10,''wd'',4);
+INSERT INTO `extra_team_score` VALUES (1,1,1,10,'wd',4),(2,1,1,10,'wd',4);
 /*!40000 ALTER TABLE `extra_team_score` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +118,7 @@ CREATE TABLE `player` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `team_id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT ''1'',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `fk_player_team_idx` (`team_id`),
   CONSTRAINT `fk_player_team` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -190,7 +190,7 @@ CREATE TABLE `team` (
 
 LOCK TABLES `team` WRITE;
 /*!40000 ALTER TABLE `team` DISABLE KEYS */;
-INSERT INTO `team` VALUES (1,''sack'',1),(2,''tck'',1);
+INSERT INTO `team` VALUES (1,'sack',1),(2,'tck',1);
 /*!40000 ALTER TABLE `team` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -258,4 +258,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-08  3:59:17
+-- Dump completed on 2019-03-08  4:09:53
