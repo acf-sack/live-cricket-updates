@@ -35,7 +35,7 @@
                 },
                 success: function (data) {
                     if(data.logged == true){
-                        window.location = 'admin.html'
+                        window.location = 'admin.php'
                     }else{
                         alert("wrong password")
                     }
