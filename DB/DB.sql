@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS `current_detail`;
 CREATE TABLE `current_detail` (
   `id` int(11) NOT NULL,
   `team_id` int(11) NOT NULL,
-  `bowler_player_id` int(11) NOT NULL,
+  `bowler_player_id` int(11) DEFAULT NULL,
   `inning` tinyint(1) NOT NULL,
   `striker_player_id` varchar(45) DEFAULT NULL,
   `batsman2_player_id` varchar(45) DEFAULT NULL,
@@ -178,7 +178,7 @@ CREATE TABLE `team` (
   `name` varchar(45) NOT NULL,
   `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,6 +187,7 @@ CREATE TABLE `team` (
 
 LOCK TABLES `team` WRITE;
 /*!40000 ALTER TABLE `team` DISABLE KEYS */;
+INSERT INTO `team` VALUES (1,'sack',1),(2,'tck',1);
 /*!40000 ALTER TABLE `team` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,4 +254,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-07 23:02:44
+-- Dump completed on 2019-03-08  1:55:11
