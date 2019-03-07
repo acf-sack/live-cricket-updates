@@ -13,6 +13,7 @@ $app = new \Slim\App([
 
 $app->add(new LiveAuth());
 
+
 $app->get('/teams', function ($request, $response, $args) {
 //    echo $request->getAttribute('type');
 
@@ -32,13 +33,23 @@ $app->get('/teams', function ($request, $response, $args) {
 
 });
 
+// login
 
-$app->get('/piumal', function ($request, $response, $args) {
+$app->post('/login', function ($request, $response, $args) {
 
-    return $response->withStatus(201)->withJson(["score" =>23, "overs"=>13]);
+    $username = $request->getParsedBodyParam('username', '');
+    $password = $request->getParsedBodyParam('password', '');
 
+    $payload = ['logged' => false];
+
+    if ($username == "admin" && $password == "root") {
+        setSession("admin", "1", "admin");
+        $payload = ['logged' => true];
+        return $response->withStatus(200)->withJson($payload);
+    }
+
+    return $response->withStatus(200)->withJson($payload);
 });
-
 
 try {
     $app->run();
@@ -46,4 +57,13 @@ try {
 } catch (\Slim\Exception\NotFoundException $e) {
 } catch (Exception $e) {
     echo 'error';
+}
+
+
+function setSession($type, $id, $displayName)
+{
+    $_SESSION['logged'] = true;
+    $_SESSION['type'] = $type;
+    $_SESSION['id'] = $id;
+    $_SESSION['displayName'] = $displayName;
 }
