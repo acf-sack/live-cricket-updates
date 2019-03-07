@@ -92,6 +92,32 @@ $app->post('/wickets', function ($request, $response, $args) {
     return $response->withStatus(400);
 });
 
+// edit wicket
+
+$app->post('/wickets/{wicket-id}', function ($request, $response, $args) {
+
+    global $con;
+
+    if ($request->getAttribute('type') != 'admin') {
+        return $response->withStatus(403);
+    }
+
+    $wicketId = $args['wicket-id'];
+
+    $batsmanPlayerId = $request->getParsedBodyParam('batsman_player_id', '');
+    $bowlerPlayerId = $request->getParsedBodyParam('bowler_player_id', '');
+    $inning = $request->getParsedBodyParam('inning', '');
+    $dType = $request->getParsedBodyParam('d_type', '');
+
+    $isExecuted = $con->query("UPDATE wicket SET batsman_player_id='$batsmanPlayerId', bowler_player_id = '$bowlerPlayerId', inning='$inning', d_type='$dType'");
+
+    if ($isExecuted) {
+        $payload = ['id' => $con->insert_id];
+        return $response->withStatus(201)->withJson($payload);
+    }
+    return $response->withStatus(400);
+});
+
 try {
     $app->run();
 } catch (\Slim\Exception\MethodNotAllowedException $e) {
