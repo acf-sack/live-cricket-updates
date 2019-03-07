@@ -97,6 +97,30 @@ $app->post('/wickets', function ($request, $response, $args) {
     return $response->withStatus(200);
 });
 
+//post current details
+
+$app->post('/current-details', function ($request, $response, $args) {
+    global $con;
+
+    if($request->getAttribute("type") != "admin"){
+        return $response->withStatus(403);
+    }
+
+    $teamId = $request->getParsedBodyParam('team_id', '');
+    $inning = $request->getParsedBodyParam('inning', '');
+
+    $_result = $con->query("SELECT * FROM current_detail WHERE id=1");
+
+    if($_result->num_rows = 1){
+        $con->query("INSERT INTO current_detail(team_id,inning) VALUES ('$teamId', '$inning')");
+    }else{
+        $con->query("INSERT INTO current_detail(id, team_id, inning ) VALUES ('1','$teamId', '$inning')");
+    }
+
+    return $response->withStatus(200)->withJson([1]);
+});
+
+
 try {
     $app->run();
 } catch (\Slim\Exception\MethodNotAllowedException $e) {
