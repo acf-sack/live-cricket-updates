@@ -111,13 +111,13 @@ $app->post('/current-details', function ($request, $response, $args) {
 
     $_result = $con->query("SELECT * FROM current_detail WHERE id=1");
 
-    if($_result->num_rows = 1){
+    if($_result->num_rows == 1){
         $con->query("INSERT INTO current_detail(team_id,inning) VALUES ('$teamId', '$inning')");
     }else{
         $con->query("INSERT INTO current_detail(id, team_id, inning ) VALUES ('1','$teamId', '$inning')");
     }
 
-    return $response->withStatus(200)->withJson([1]);
+    return $response->withStatus(200)   ;
 });
 
 
