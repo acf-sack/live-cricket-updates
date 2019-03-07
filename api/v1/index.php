@@ -13,9 +13,23 @@ $app = new \Slim\App([
 
 $app->add(new LiveAuth());
 
-$app->get('/hello', function ($request, $response, $args) {
 
-    return $response->withStatus(201)->withJson();
+$app->get('/teams', function ($request, $response, $args) {
+//    echo $request->getAttribute('type');
+
+    global $con;
+    $_teams = $con->query("SELECT id,name FROM team WHERE status=1");
+
+
+    $teams = [];
+
+    while ($team= $_teams->fetch_assoc()){
+        $teams[] = $team;
+    }
+
+
+
+    return $response->withStatus(201)->withJson($teams);
 
 });
 
