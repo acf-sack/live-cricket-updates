@@ -363,14 +363,19 @@ if (!isset($_SESSION['type']) && $_SESSION['type'] != 'admin') {
                 $("#inning").text(inning);
                 $("#team").text(team_id)
 
-                if (data.hasOwnProperty(player)) {
-                    striker_player_id = data.striker_player_id;
-                    batsman2_player_id = data.batsman2_player_id;
-                }
 
             }
 
 
+        })
+
+        $.ajax({
+            url: "http://localhost/live-cricket-updates/api/v1/update-player",
+            type: "post",
+            dataType: "json",
+            data : {
+
+            }
         })
 
 
