@@ -1,3 +1,3 @@
 <?php
 
-$con = new mysqli("127.0.0.1", "root", "root123", "live_cricket_updates");
+$con = new mysqli("localhost", "heshan", "Heshan@666", "live_cricket_updates");
