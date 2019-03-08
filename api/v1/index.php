@@ -145,7 +145,7 @@ $app->post('/extra-team-score', function ($request, $response, $args) {
 //update players
 
 $app->post('/update-player', function ($request, $response, $args) {
-    global $con;
+
 
     if($request->getAttribute("type") != "admin"){
         return $response->withStatus(403);
@@ -155,7 +155,7 @@ $app->post('/update-player', function ($request, $response, $args) {
     $strikerPlayerId = $request->getParsedBodyParam('striker_player_id', '');
     $nonStrikerPlayerId = $request->getParsedBodyParam('non_striker_player_id', '');
 
-    addCurrentDetails($bowlerPlayerId,$strikerPlayerId,$nonStrikerPlayerId);
+//    addCurrentDetails($bowlerPlayerId,$strikerPlayerId,$nonStrikerPlayerId);
 
     return $response->withStatus(201);
 });
@@ -200,7 +200,7 @@ $app->delete('/scores/{id}', function ($request, $response, $args) {
 
 //score update
 
-$app->update('/scores/{id}', function ($request, $response, $args) {
+$app->post('/scores/{id}', function ($request, $response, $args) {
     global $con;
 
     if($request->getAttribute("type") != "admin"){
@@ -218,7 +218,7 @@ $app->update('/scores/{id}', function ($request, $response, $args) {
     $score = $request->getParsedBodyParam('score', '');
 
 
-    $con->query("DELETE FROM score WHERE id = $id");
+    $con->query("UPDATE score SET team_id = '$teamId', inning = '$inning', batsman_player_id = '$batsmanPlayerId', bowler_player_id = '$bowlerPlayerId', over = '$over', ball = '$ball', score = '$score' WHERE id = $id");
 
     return $response->withStatus(201);
 });
@@ -243,4 +243,5 @@ function setSession($type, $id, $displayName)
 function addCurrentDetails($bowler, $striker, $nonStriker){
     global $con;
     $con->query("INSERT INTO current_detail(bowler_player_id, striker_player_id, batsman2_player_id) VALUES ('$bowler', '$striker', '$nonStriker')");
+    echo "INSERT INTO current_detail(bowler_player_id, striker_player_id, batsman2_player_id) VALUES ('$bowler', '$striker', '$nonStriker')";
 }
