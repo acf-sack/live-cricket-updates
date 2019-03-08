@@ -122,7 +122,7 @@ $app->post('/current-details', function ($request, $response, $args) {
     return $response->withStatus(200)   ;
 });
 
-//extra team score
+//extra team score insert
 
 $app->post('/extra-team-score', function ($request, $response, $args) {
     global $con;
@@ -142,6 +142,104 @@ $app->post('/extra-team-score', function ($request, $response, $args) {
     $id = $con->insert_id;
 
     return $response->withStatus(201)->withJson(["id"=>$id])   ;
+});
+
+//extra team score update
+
+$app->post('/extra-team-score/{id}', function ($request, $response, $args) {
+    global $con;
+
+    if($request->getAttribute("type") != "admin"){
+        return $response->withStatus(403);
+    }
+
+    $id = $args["id"];
+
+    $inning = $request->getParsedBodyParam('inning', '');
+    $teamId = $request->getParsedBodyParam('team_id', '');
+    $over = $request->getParsedBodyParam('over', '');
+    $type = $request->getParsedBodyParam('type', '');
+    $score = $request->getParsedBodyParam('score', '');
+
+    $con->query("UPDATE extra_team_score SET inning = '$inning', team_id = '$teamId', over = '$over', type = '$type', score = '$score' WHERE id = $id");
+
+
+    return $response->withStatus(201)->withJson(["id"=>$id])   ;
+});
+
+//extra team score delete
+
+$app->delete('/extra-team-score/{id}', function ($request, $response, $args) {
+    global $con;
+
+    if($request->getAttribute("type") != "admin"){
+        return $response->withStatus(403);
+    }
+
+    $id = $args["id"];
+
+    $con->query("DELETE FROM extra_team_score WHERE id = $id");
+
+    return $response->withStatus(201);
+});
+
+//extra batsman score insert
+
+$app->post('/extra-batsman-score', function ($request, $response, $args) {
+    global $con;
+
+    if($request->getAttribute("type") != "admin"){
+        return $response->withStatus(403);
+    }
+
+    $batsmanPlayerId = $request->getParsedBodyParam('batsman_player_id', '');
+    $over = $request->getParsedBodyParam('over', '');
+    $ball = $request->getParsedBodyParam('ball', '');
+    $score = $request->getParsedBodyParam('score', '');
+
+    $con->query("INSERT INTO extra_batsman_score(batsman_player_id, over, ball, score) VALUES ('$batsmanPlayerId', '$over', '$ball', '$score')");
+
+    $id = $con->insert_id;
+
+    return $response->withStatus(201)->withJson(["id"=>$id])   ;
+});
+
+//extra batsman score update
+
+$app->post('/extra-batsman-score/{id}', function ($request, $response, $args) {
+    global $con;
+
+    if($request->getAttribute("type") != "admin"){
+        return $response->withStatus(403);
+    }
+
+    $id = $args["id"];
+
+    $batsmanPlayerId = $request->getParsedBodyParam('batsman_player_id', '');
+    $over = $request->getParsedBodyParam('over', '');
+    $ball = $request->getParsedBodyParam('ball', '');
+    $score = $request->getParsedBodyParam('score', '');
+
+    $con->query("UPDATE extra_batsman_score SET batsman_player_id = '$batsmanPlayerId', over = '$over', ball = '$ball', score = '$score' WHERE id = $id");
+
+
+    return $response->withStatus(201)->withJson(["id"=>$id])   ;
+});
+
+//extra batsman score delete
+
+$app->delete('/extra-batsman-score/{id}', function ($request, $response, $args) {
+    global $con;
+
+    if($request->getAttribute("type") != "admin"){
+        return $response->withStatus(403);
+    }
+
+    $id = $args["id"];
+
+    $con->query("DELETE FROM extra_batsman_score WHERE id = $id");
+
+    return $response->withStatus(201)->withJson(["id"=>$id]);
 });
 
 //update players
