@@ -113,8 +113,10 @@ $app->post('/current-details', function ($request, $response, $args) {
 
     if($_result->num_rows == 1){
         $con->query("INSERT INTO current_detail(team_id,inning) VALUES ('$teamId', '$inning')");
+        echo "INSERT INTO current_detail(team_id,inning) VALUES ('$teamId', '$inning')";
     }else{
         $con->query("INSERT INTO current_detail(id, team_id, inning ) VALUES ('1','$teamId', '$inning')");
+        echo "INSERT INTO current_detail(id, team_id, inning ) VALUES ('1','$teamId', '$inning')";
     }
 
     return $response->withStatus(200)   ;
