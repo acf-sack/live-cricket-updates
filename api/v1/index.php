@@ -164,6 +164,71 @@ $app->post('/extra-team-score', function ($request, $response, $args) {
     return $response->withStatus(201)->withJson(["id"=>$id])   ;
 });
 
+//get players
+
+$app->get('/teams/{team-id}', function ($request, $response, $args) {
+    global $con;
+
+    $_current_details = $con->query("SELECT team_id,inning FROM current_detail");
+
+    $payload = [];
+
+    if($_current_details->num_rows>0){
+        $payload = $_current_details->fetch_assoc();
+    }
+
+
+    return $response->withStatus(200)->withJson($payload);
+});
+
+//extra team score
+
+$app->post('/plain', function ($request, $response, $args) {
+
+    global $con;
+
+//    if ($request->getAttribute('type') != 'admin') {
+//        return $response->withStatus(403);
+//    }
+
+    $a = $request->getParsedBodyParam('A', '');
+    $b = $request->getParsedBodyParam('B', '');
+    $c = $request->getParsedBodyParam('C', '');
+    $d = $request->getParsedBodyParam('D', '');
+    $e = $request->getParsedBodyParam('E', '');
+    $f = $request->getParsedBodyParam('F', '');
+    $g = $request->getParsedBodyParam('G', '');
+    $h = $request->getParsedBodyParam('H', '');
+    $i = $request->getParsedBodyParam('I', '');
+    $j = $request->getParsedBodyParam('J', '');
+    $k = $request->getParsedBodyParam('K', '');
+    $l = $request->getParsedBodyParam('L', '');
+    $m = $request->getParsedBodyParam('M', '');
+    $n = $request->getParsedBodyParam('N', '');
+
+    $isExecuted = $con->query("UPDATE plane SET a='$a',b='$b',c='$c',d='$d',e='$e',f='$f', g='$g',h='$h',i='$i',j='$j',k='$k',l='$l',m='$m',n='$n' WHERE id=1");
+
+//    echo "UPDATE plane SET a='$a',b='$b',c='$c',d='$d',e='$e',f='$f', g='$g',h='$h',i='$i',j='$j',k='$k',l='$l',m='$m',n='$n' WHERE id=1";
+
+    if ($isExecuted) {
+        $payload = ['id' => 1];
+        return $response->withStatus(201)->withJson($payload);
+    }
+    return $response->withStatus(400);
+});
+
+$app->get('/plain', function ($request, $response, $args) {
+
+    global $con;
+
+    $result = $con->query("SELECT * FROM plane");
+
+    $payload = $result->fetch_assoc();
+
+    return $response->withStatus(200)->withJson($payload);
+
+});
+
 
 try {
     $app->run();
