@@ -74,27 +74,48 @@ $app->post('/wickets', function ($request, $response, $args) {
 
     global $con;
 
-    echo ($request->getAttribute('type'));
+    if ($request->getAttribute('type') != 'admin') {
+        return $response->withStatus(403);
+    }
 
-//    if ($request->getAttribute('type') != 'admin') {
-//        return $response->withStatus(403);
-//    }
-//
-//    $batsmanPlayerId = $request->getParsedBodyParam('batsman_player_id', '');
-//    $bowlerPlayerId = $request->getParsedBodyParam('bowler_player_id', '');
-//    $dType = $request->getParsedBodyParam('d_type', '');
-//
-//    $isExecuted = $con->query("INSERT INTO wicket(batsman_player_id, bowler_player_id, inning, d_type) VALUES ('$batsmanPlayerId', '$bowlerPlayerId', '$dType')");
-//
-//    if($isExecuted){}
-//
-//
-//
-//    if ($isExecuted) {
-//        $payload = ['id' => $con->insert_id];
-//        return $response->withStatus(200)->withJson($payload);
-//    }
-    return $response->withStatus(200);
+    $batsmanPlayerId = $request->getParsedBodyParam('batsman_player_id', '');
+    $bowlerPlayerId = $request->getParsedBodyParam('bowler_player_id', '');
+    $inning = $request->getParsedBodyParam('inning', '');
+    $dType = $request->getParsedBodyParam('d_type', '');
+
+    $isExecuted = $con->query("INSERT INTO wicket(batsman_player_id, bowler_player_id, inning, d_type) VALUES ('$batsmanPlayerId', '$bowlerPlayerId', '$inning','$dType')");
+
+    if ($isExecuted) {
+        $payload = ['id' => $con->insert_id];
+        return $response->withStatus(201)->withJson($payload);
+    }
+    return $response->withStatus(400);
+});
+
+// edit wicket
+
+$app->post('/wickets/{wicket-id}', function ($request, $response, $args) {
+
+    global $con;
+
+    if ($request->getAttribute('type') != 'admin') {
+        return $response->withStatus(403);
+    }
+
+    $wicketId = $args['wicket-id'];
+
+    $batsmanPlayerId = $request->getParsedBodyParam('batsman_player_id', '');
+    $bowlerPlayerId = $request->getParsedBodyParam('bowler_player_id', '');
+    $inning = $request->getParsedBodyParam('inning', '');
+    $dType = $request->getParsedBodyParam('d_type', '');
+
+    $isExecuted = $con->query("UPDATE wicket SET batsman_player_id='$batsmanPlayerId', bowler_player_id = '$bowlerPlayerId', inning='$inning', d_type='$dType'");
+
+    if ($isExecuted) {
+        $payload = ['id' => $con->insert_id];
+        return $response->withStatus(201)->withJson($payload);
+    }
+    return $response->withStatus(400);
 });
 
 //post current details
@@ -111,18 +132,12 @@ $app->post('/current-details', function ($request, $response, $args) {
 
     $_result = $con->query("SELECT * FROM current_detail WHERE id=1");
 
-    if($_result->num_rows == 1){
-        $con->query("INSERT INTO current_detail(team_id,inning) VALUES ('$teamId', '$inning')");
-        echo "INSERT INTO current_detail(team_id,inning) VALUES ('$teamId', '$inning')";
-    }else{
-        $con->query("INSERT INTO current_detail(id, team_id, inning ) VALUES ('1','$teamId', '$inning')");
-        echo "INSERT INTO current_detail(id, team_id, inning ) VALUES ('1','$teamId', '$inning')";
-    }
+    $con->query("UPDATE current_detail SET inning='$inning', team_id='$teamId' WHERE id=1");
 
     return $response->withStatus(200)   ;
 });
 
-//extra team score insert
+//extra team score
 
 $app->post('/extra-team-score', function ($request, $response, $args) {
     global $con;
@@ -242,6 +257,71 @@ $app->delete('/extra-batsman-score/{id}', function ($request, $response, $args) 
     return $response->withStatus(201)->withJson(["id"=>$id]);
 });
 
+//get players
+
+$app->get('/teams/{team-id}', function ($request, $response, $args) {
+    global $con;
+
+    $_current_details = $con->query("SELECT team_id,inning FROM current_detail");
+
+    $payload = [];
+
+    if($_current_details->num_rows>0){
+        $payload = $_current_details->fetch_assoc();
+    }
+
+
+    return $response->withStatus(200)->withJson($payload);
+});
+
+//extra team score
+
+$app->post('/plain', function ($request, $response, $args) {
+
+    global $con;
+
+//    if ($request->getAttribute('type') != 'admin') {
+//        return $response->withStatus(403);
+//    }
+
+    $a = $request->getParsedBodyParam('A', '');
+    $b = $request->getParsedBodyParam('B', '');
+    $c = $request->getParsedBodyParam('C', '');
+    $d = $request->getParsedBodyParam('D', '');
+    $e = $request->getParsedBodyParam('E', '');
+    $f = $request->getParsedBodyParam('F', '');
+    $g = $request->getParsedBodyParam('G', '');
+    $h = $request->getParsedBodyParam('H', '');
+    $i = $request->getParsedBodyParam('I', '');
+    $j = $request->getParsedBodyParam('J', '');
+    $k = $request->getParsedBodyParam('K', '');
+    $l = $request->getParsedBodyParam('L', '');
+    $m = $request->getParsedBodyParam('M', '');
+    $n = $request->getParsedBodyParam('N', '');
+
+    $isExecuted = $con->query("UPDATE plane SET a='$a',b='$b',c='$c',d='$d',e='$e',f='$f', g='$g',h='$h',i='$i',j='$j',k='$k',l='$l',m='$m',n='$n' WHERE id=1");
+
+//    echo "UPDATE plane SET a='$a',b='$b',c='$c',d='$d',e='$e',f='$f', g='$g',h='$h',i='$i',j='$j',k='$k',l='$l',m='$m',n='$n' WHERE id=1";
+
+    if ($isExecuted) {
+        $payload = ['id' => 1];
+        return $response->withStatus(201)->withJson($payload);
+    }
+    return $response->withStatus(400);
+});
+
+$app->get('/plain', function ($request, $response, $args) {
+
+    global $con;
+
+    $result = $con->query("SELECT * FROM plane");
+
+    $payload = $result->fetch_assoc();
+
+    return $response->withStatus(200)->withJson($payload);
+
+});
+
 //update players
 
 $app->post('/update-player', function ($request, $response, $args) {
@@ -342,6 +422,5 @@ function setSession($type, $id, $displayName)
 
 function addCurrentDetails($bowler, $striker, $nonStriker){
     global $con;
-    $con->query("INSERT INTO current_detail(bowler_player_id, striker_player_id, batsman2_player_id) VALUES ('$bowler', '$striker', '$nonStriker')");
-    echo "INSERT INTO current_detail(bowler_player_id, striker_player_id, batsman2_player_id) VALUES ('$bowler', '$striker', '$nonStriker')";
+    $con->query("UPDATE current_detail SET bowler_player_id='$bowler', batsman2_player_id='$nonStriker', striker_player_id='$striker'");
 }
