@@ -73,7 +73,30 @@ die();
 <script src="vendor/jquery/jquery.min.js"></script>
 
 <script>
+
+    var team_id = null;
+    var inning = null;
+
     $(function () {
+
+
+        //get current details
+
+        $.ajax({
+            url: "http://localhost/live-cricket-updates/api/v1/current-details",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                team_id = data.team_id;
+                inning = data.inning;
+
+                $("#inning").val(inning);
+                $("#team").val(team_id)
+
+            }
+
+
+        })
 
         $("#btnAddInning").click(function () {
             let inning= $("#inning").val();
@@ -86,15 +109,15 @@ die();
                 // dataType : "json",
                 data : 'inning='+inning+'&team_id='+team,
                 success : function (data) {
-                    console.log("success")
+                    alert('saved')
                 },
                 error : function (data) {
-                    console.log("error")
-                    console.log(data)
+                    alert('error: something went wrong')
                 }
 
             })
         })
+
 
 
 
