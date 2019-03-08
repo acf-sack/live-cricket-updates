@@ -40,10 +40,10 @@ die();
 <!---->
 <!--            </div>-->
 
-            <span>User Name</span>
+            <span>Inning</span>
             <input type="text" name="inning" id="inning" placeholder="inning"><br><br>
 
-            <span>Password</span>
+            <span>Team id</span>
             <input type="text" name="team" id="team" placeholder="team"><br><br>
 
             <input id="btnAddInning" type="submit">
@@ -79,14 +79,20 @@ die();
             let inning= $("#inning").val();
             let team = $("#team").val();
 
+
             $.ajax({
                 url : "http://localhost/live-cricket-updates/api/v1/current-details",
                 type : "post",
-                dataType : "json",
+                // dataType : "json",
                 data : 'inning='+inning+'&team_id='+team,
-                success : {
+                success : function () {
                     console.log("success")
+                },
+                error : function (data) {
+                    console.log("error")
+                    console.log(data)
                 }
+
             })
         })
 
