@@ -304,7 +304,89 @@ die();
     <i class="fas fa-angle-up"></i>
 </a>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
 
+                <h4 class="modal-title" id="modelTitle">Edit Score</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                    <tr class="row-md">
+                        <th>over</th>
+                        <th> ball</th>
+                        <th>batsman</th>
+                        <th>bowler</th>
+                        <th>score</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input type="text" class="form-control form-control-user" placeholder="0" readonly></td>
+                        <td><input type="text" class="form-control form-control-user" placeholder="1" readonly></td>
+                        <td><input type="text" class="form-control form-control-user" placeholder="Batsman1" readonly></td>
+                        <td><input type="text" class="form-control form-control-user"
+                                   placeholder="Bowler1" readonly></td>
+                        <td><input type="text" class="form-control form-control-user" placeholder="4" readonly></td>
+                        <td> <button class="btn btn-warning">edit</button></td>
+                        <td> <button class="btn btn-danger">delete</button></td>
+                    </tr>
+
+                    <tr>
+                        <td><input type="text" class="form-control form-control-user" value="0"></td>
+                        <td><input type="text" class="form-control form-control-user" value="1"></td>
+                        <td>
+                            <div class="dropdown mb-4">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="bowler"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Batsman
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Batsman 1</a>
+                                    <a class="dropdown-item" href="#">Batsman 2</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="dropdown mb-4">
+                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                        id="bowler3"
+                                        data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                    Bowler
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Bowler 1</a>
+                                    <a class="dropdown-item" href="#">Bowler 2</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td><input type="text" class="form-control form-control-user" value="4"></td>
+                        <td> <button class="btn btn-success">submit</button></td>
+                        <td> <button class="btn btn-primary">cancel</button></td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+
+                <div class="right-side">
+                    <button type="button" class="btn btn-danger btn-simple">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--    end modal -->
 
 
 
