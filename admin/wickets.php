@@ -1,8 +1,8 @@
 <?php
 session_start();
 if(!isset($_SESSION['type']) && $_SESSION['type']!='admin'){
-header('Location: login.php');
-die();
+    header('Location: login.php');
+    die();
 }
 ?>
 <!DOCTYPE html>
@@ -124,10 +124,11 @@ die();
             <div class="container container-fluid">
                 <div class="row">
                     <div class="col-md-10">
+
                         <div class="card mb-4">
                             <div class="container">
                                 <div class="card-header-md">
-                                    <div class="text-dark text-sm-left"><b>Previous records</b></div>
+                                    <div class="text-dark text-sm-left"><b>Wickets</b></div>
                                 </div>
                             </div><br>
                             <div class="card-body-sm">
@@ -137,9 +138,8 @@ die();
                                         <tr class="row-md">
                                             <th>over</th>
                                             <th> ball</th>
-                                            <th>batsman</th>
+                                            <th>dis. batsman</th>
                                             <th>bowler</th>
-                                            <th>score</th>
                                             <th>Edit</th>
                                             <th>Delete</th>
                                         </tr>
@@ -149,15 +149,10 @@ die();
                                             <td><input type="text" class="form-control form-control-user" placeholder="0" readonly></td>
                                             <td><input type="text" class="form-control form-control-user" placeholder="1" readonly></td>
                                             <td><input type="text" class="form-control form-control-user" placeholder="Batsman1" readonly></td>
-                                            <td><input type="text" class="form-control form-control-user"
-                                                       placeholder="Bowler1" readonly></td>
-                                            <td><input type="text" class="form-control form-control-user" placeholder="4" readonly></td>
-                                            <td> <button href="#" class="btn btn-danger btn-circle" onclick="modalOpen1()">
-                                                    edit
-                                                </button></td>
+                                            <td><input type="text" class="form-control form-control-user" placeholder="Bowler2" readonly></td>
+                                            <td> <button onClick="modalOpen2()" class="btn btn-warning">edit</button></td>
                                             <td> <button class="btn btn-danger">delete</button></td>
                                         </tr>
-
 
 
 
@@ -204,13 +199,14 @@ die();
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Modal score -->
+
+<!-- Modal Wickets-->
 <div class="modal fade" id="scoreRecordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
 
-                <h4 class="modal-title" id="modelTitle">Edit Score</h4>
+                <h4 class="modal-title" id="modelTitle">Edit Wickets</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
@@ -218,10 +214,9 @@ die();
                     <thead>
                     <tr class="row-md">
                         <th>over</th>
-                        <th>ball</th>
-                        <th>batsman id</th>
-                        <th>bowler id</th>
-                        <th>score</th>
+                        <th> ball</th>
+                        <th>dis. batsman</th>
+                        <th>bowler</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -229,7 +224,6 @@ die();
                         <td><input label="v" type="text" class="form-control form-control-user" value="2"></td>
                         <td><input type="text" class="form-control form-control-user" value="1"></td>
                         <td><input type="text" class="form-control form-control-user" value="1"></td>
-                        <td><input type="text" class="form-control form-control-user" value="4"></td>
                         <td><input type="text" class="form-control form-control-user" value="4"></td>
                         <td> <button class="btn btn-success">submit</button></td>
                     </tr>
@@ -241,7 +235,7 @@ die();
             <div class="modal-footer">
 
                 <div class="right-side">
-                    <button type="button" class="btn btn-danger btn-simple" data-toggle="modal" data-target="#scoreRecordModal" >Save</button>
+                    <button type="button" class="btn btn-danger btn-simple" data-toggle="modal" data-target="#wicketRecordModal" >Save</button>
                 </div>
             </div>
         </div>
@@ -249,8 +243,6 @@ die();
 </div>
 
 <!--    end modal -->
-
-
 
 
 
@@ -280,6 +272,9 @@ die();
 
     }
 
+    function modalOpen2() {
+
+    }
 </script>
 
 </html>

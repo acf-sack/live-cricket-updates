@@ -31,6 +31,8 @@ CREATE TABLE `current_detail` (
   `inning` tinyint(1) NOT NULL,
   `striker_player_id` varchar(45) DEFAULT NULL,
   `batsman2_player_id` varchar(45) DEFAULT NULL,
+  `over` int(11) NOT NULL,
+  `ball` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_current_details_team1_idx` (`team_id`),
   KEY `fk_current_details_player1_idx` (`bowler_player_id`),
@@ -45,7 +47,7 @@ CREATE TABLE `current_detail` (
 
 LOCK TABLES `current_detail` WRITE;
 /*!40000 ALTER TABLE `current_detail` DISABLE KEYS */;
-INSERT INTO `current_detail` VALUES (1,1,NULL,1,NULL,NULL);
+INSERT INTO `current_detail` VALUES (1,1,NULL,1,NULL,NULL,0,0);
 /*!40000 ALTER TABLE `current_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,6 +64,7 @@ CREATE TABLE `extra_batsman_score` (
   `over` int(11) NOT NULL,
   `ball` int(11) NOT NULL,
   `score` int(11) NOT NULL,
+  `inning` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_extra_batsman_score_player1_idx` (`batsman_player_id`),
   CONSTRAINT `fk_extra_batsman_score_player1` FOREIGN KEY (`batsman_player_id`) REFERENCES `player` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -294,4 +297,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-08  4:47:09
+-- Dump completed on 2019-03-08  9:37:10
