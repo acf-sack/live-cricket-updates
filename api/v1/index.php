@@ -132,11 +132,7 @@ $app->post('/current-details', function ($request, $response, $args) {
 
     $_result = $con->query("SELECT * FROM current_detail WHERE id=1");
 
-    if($_result->num_rows == 1){
-        $con->query("INSERT INTO current_detail(team_id,inning) VALUES ('$teamId', '$inning')");
-    }else{
-        $con->query("INSERT INTO current_detail(id, team_id, inning ) VALUES ('1','$teamId', '$inning')");
-    }
+    $con->query("UPDATE current_detail SET inning='$inning', team_id='$teamId' WHERE id=1");
 
     return $response->withStatus(200)   ;
 });
@@ -328,5 +324,5 @@ function setSession($type, $id, $displayName)
 
 function addCurrentDetails($bowler, $striker, $nonStriker){
     global $con;
-    $con->query("INSERT INTO current_detail(bowler_player_id, striker_player_id, batsman2_player_id) VALUES ('$bowler', '$striker', '$nonStriker')");
+    $con->query("UPDATE current_detail SET bowler_player_id='$bowler', batsman2_player_id='$nonStriker', striker_player_id='$striker'");
 }
