@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['type']) && $_SESSION['type']!='admin'){
+if (!isset($_SESSION['type']) && $_SESSION['type'] != 'admin') {
     header('Location: login.php');
     die();
 }
@@ -124,6 +124,10 @@ if(!isset($_SESSION['type']) && $_SESSION['type']!='admin'){
             <div class="container container-fluid">
                 <div class="row">
                     <div class="col-md-8">
+                        <div>Inning -</div>
+                        <span id="inning"></span>
+                        <div>Team(Batting) -</div>
+                        <span id="team"></span>
                         <div class="card mb-4 py-3 border-left-primary">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Current Batsmans</h6>
@@ -133,7 +137,7 @@ if(!isset($_SESSION['type']) && $_SESSION['type']!='admin'){
                                     <div class="form-group row">
                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                             <input type="text" class="form-control form-control-user disabled"
-                                                   id="exampleFirstName" placeholder="Batsman 1 Name" readonly>
+                                                   placeholder="Batsman1 id">
                                         </div>
                                         <div class="col-sm-4 mb-3 mb-sm-0 text-center">
                                             <--
@@ -145,14 +149,26 @@ if(!isset($_SESSION['type']) && $_SESSION['type']!='admin'){
                                             </label>
                                             -->
                                         </div>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control form-control-user"
-                                                   id="exampleLastName" placeholder="Batsman 2 Name" readonly>
+
+                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                            <input type="text" class="form-control form-control-user disabled"
+                                                   placeholder="Batsman2 id">
                                         </div>
+
+
+
                                     </div>
+
                                 </form>
+
+                                <div class="col-sm-4 offset-sm-4 mb-3 mb-sm-0 text-center">
+                                    <input type="text" class="form-control form-control-user disabled text-center"
+                                           placeholder="Bowler id">
+                                </div>
+
                             </div>
                         </div>
+
                         <div class="card mb-4 py-3 border-left-primary">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Current Over</h6>
@@ -162,12 +178,12 @@ if(!isset($_SESSION['type']) && $_SESSION['type']!='admin'){
                                     <div class="form-group row">
                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                             <input type="text" class="form-control form-control-user disabled"
-                                                    placeholder="Over">
+                                                   placeholder="Over">
                                         </div>
 
                                         <div class="col-sm-4">
                                             <input type="text" class="form-control form-control-user"
-                                                    placeholder="Ball">
+                                                   placeholder="Ball">
                                         </div>
                                     </div>
                                 </form>
@@ -213,23 +229,7 @@ if(!isset($_SESSION['type']) && $_SESSION['type']!='admin'){
 
                     </div>
                     <div class="col-md-4">
-                        <div class="card mb-4 py-3 border-left-primary">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Current Bowler</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="dropdown mb-4">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="bowler"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Choose the Bowler
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#">Bowler 1</a>
-                                        <a class="dropdown-item" href="#">Bowler 2</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
 
                         <div class="card mb-4 py-3 border-left-primary">
                             <div class="card-header py-3">
@@ -240,13 +240,15 @@ if(!isset($_SESSION['type']) && $_SESSION['type']!='admin'){
                                     <div class="form-group row">
                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                             <input type="text" class="form-control form-control-user disabled"
-                                                    placeholder="Score">
+                                                   placeholder="Score">
                                         </div>
 
                                         <div class="col-sm-4">
                                             <div class="dropdown mb-4">
-                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="extratype"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                        id="extratype"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
                                                     Choose the type
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -300,7 +302,6 @@ if(!isset($_SESSION['type']) && $_SESSION['type']!='admin'){
 </a>
 
 
-
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -345,6 +346,42 @@ if(!isset($_SESSION['type']) && $_SESSION['type']!='admin'){
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
 
+<script>
+    var team_id = null;
+    var inning = null;
+    var striker_player_id = null;
+    var batsman2_player_id = null;
+    $(function () {
+        $.ajax({
+            url: "http://localhost/live-cricket-updates/api/v1/current-details",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                team_id = data.team_id;
+                inning = data.inning;
+
+                $("#inning").text(inning);
+                $("#team").text(team_id)
+
+
+            }
+
+
+        })
+
+        $.ajax({
+            url: "http://localhost/live-cricket-updates/api/v1/update-player",
+            type: "post",
+            dataType: "json",
+            data : {
+
+            }
+        })
+
+
+    })
+
+</script>
 </body>
 
 </html>
