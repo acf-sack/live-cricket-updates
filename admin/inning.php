@@ -80,15 +80,12 @@ die();
             let team = $("#team").val();
 
             $.ajax({
-                url : "http://localhost/live-cricket-updates/api/v1/current",
+                url : "http://localhost/live-cricket-updates/api/v1/current-details",
                 type : "post",
                 dataType : "json",
-                data : {
-                    "team_id": team,
-                    "inning": inning
-                },
-                success: function (data) {
-
+                data : 'inning='+inning+'&team_id='+team,
+                success : {
+                    console.log("success")
                 }
             })
         })
