@@ -81,11 +81,11 @@ die();
 
 
             $.ajax({
-                url : "http://localhost/live-cricket-updates/api/v1/current-details",
+                url : "../api/v1/current-details",
                 type : "post",
                 // dataType : "json",
                 data : 'inning='+inning+'&team_id='+team,
-                success : function () {
+                success : function (data) {
                     console.log("success")
                 },
                 error : function (data) {
