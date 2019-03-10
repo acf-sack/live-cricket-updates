@@ -1,0 +1,9 @@
+<UserControl Width="1920" Height="1080" Panel.ZIndex="500" InputMethod.IsInputMethodEnabled="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mtl="clr-namespace:vMixTitleLibrary;assembly=vMixTitleLibrary">
+  <Grid InputMethod.IsInputMethodEnabled="True">
+    <Image Stretch="Fill" Width="1920" Height="1080" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="0" InputMethod.IsInputMethodEnabled="True" />
+    <Image Source="M_SCR_CRD.png" Name="Image1" Width="1921.73207036536" Height="1081.13667117727" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" InputMethod.IsInputMethodEnabled="True" />
+    <mtl:TextBlockDesign FontStyle="Normal" FontWeight="Normal" FontFamily="Corbel" Fill="#FF000000" FontSize="32" Text="SACK" Name="school" Width="83.085250338295" Height="39.0633316040039" Margin="376.332882273342,945.31799729364,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" InputMethod.IsInputMethodEnabled="True" />
+    <mtl:TextBlockDesign FontStyle="Normal" FontWeight="Normal" FontFamily="Arial Unicode MS" Fill="#FF000000" FontSize="32" TextAlignment="Right" Text="888/8" Name="score" Width="93.6504677295994" Height="42.8733329772949" Margin="465.550261124321,946.013671875,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" InputMethod.IsInputMethodEnabled="True" />
+    <mtl:TextBlockDesign FontStyle="Normal" FontWeight="Normal" FontFamily="Arial Unicode MS" Fill="#FFFFFFFF" FontSize="32" TextAlignment="Right" Text="88/8" Name="score1" Width="73.693945990469" Height="42.8733329772949" Margin="575.898087211277,948.361497961957,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" InputMethod.IsInputMethodEnabled="True" />
+  </Grid>
+</UserControl>

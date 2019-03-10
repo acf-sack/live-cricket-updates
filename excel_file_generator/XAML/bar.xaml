@@ -1,0 +1,10 @@
+<UserControl Width="1920" Height="1080" Panel.ZIndex="500" InputMethod.IsInputMethodEnabled="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mtl="clr-namespace:vMixTitleLibrary;assembly=vMixTitleLibrary">
+  <Grid InputMethod.IsInputMethodEnabled="True">
+    <Image Stretch="Fill" Width="1920" Height="1080" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="0" InputMethod.IsInputMethodEnabled="True" />
+    <Image Source="bar.png" Name="Image1" Width="1906.14343707713" Height="1070.74424898511" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" InputMethod.IsInputMethodEnabled="True" />
+    <mtl:TextBlockDesign Fill="#FF000080" FontSize="26" Text="Text" Name="Text1" Width="1027.33405875952" Height="29.8966674804688" Margin="672.269190050372,938.13998860325,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" InputMethod.IsInputMethodEnabled="True" />
+    <mtl:TextBlockDesign Fill="#FF000080" FontSize="26" Text="Text" Name="Text2" Width="1027.33405875952" Height="29.8966674804688" Margin="679.320332596618,987.497986426972,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" InputMethod.IsInputMethodEnabled="True" />
+    <mtl:TextBlockDesign Fill="#FF000080" FontSize="26" Text="Text" Name="Text3" Width="1027.33405875952" Height="29.8966674804688" Margin="1201.10488101882,939.315179027624,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" InputMethod.IsInputMethodEnabled="True" />
+    <mtl:TextBlockDesign Fill="#FF000080" FontSize="26" Text="Text" Name="Text4" Width="1027.33405875952" Height="29.8966674804688" Margin="681.670713445367,1025.10408000695,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" InputMethod.IsInputMethodEnabled="True" />
+  </Grid>
+</UserControl>
