@@ -305,6 +305,21 @@ $app->post('/plain', function ($request, $response, $args) {
     $m = $request->getParsedBodyParam('M', '');
     $n = $request->getParsedBodyParam('N', '');
 
+    $overs = $e;
+    $dirtyOvers = explode('.', $e);
+
+    if(sizeof($dirtyOvers)==2){
+       $overs+= $dirtyOvers[1]/6;
+    }
+
+    $score = $b;
+
+    $rr = $score/$overs;
+    $rr = number_format((float)$rr, 2, '.', '');
+
+    $d = $rr;
+
+
     $isExecuted = $con->query("UPDATE plane SET a='$a',b='$b',c='$c',d='$d',e='$e',f='$f', g='$g',h='$h',i='$i',j='$j',k='$k',l='$l',m='$m',n='$n' WHERE id=1");
 
 //    echo "UPDATE plane SET a='$a',b='$b',c='$c',d='$d',e='$e',f='$f', g='$g',h='$h',i='$i',j='$j',k='$k',l='$l',m='$m',n='$n' WHERE id=1";
