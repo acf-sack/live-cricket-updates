@@ -152,11 +152,17 @@ $app->post('/extra-team-score', function ($request, $response, $args) {
     $type = $request->getParsedBodyParam('type', '');
     $score = $request->getParsedBodyParam('score', '');
 
-    $con->query("INSERT INTO extra_team_score(team_id, inning, over, type, score) VALUES ('$teamId', '$inning', '$over', '$type', '$score')");
+    $isExecuted = $con->query("INSERT INTO extra_team_score(team_id, inning, `over`, type, score) VALUES ('$teamId', '$inning', '$over', '$type', '$score')");
 
-    $id = $con->insert_id;
+    if($isExecuted){
+        $id = $con->insert_id;
 
-    return $response->withStatus(201)->withJson(["id"=>$id])   ;
+        return $response->withStatus(201)->withJson(["id"=>$id]);
+    }
+
+
+    return $response->withStatus(400);
+
 });
 
 //extra team score update
@@ -176,7 +182,7 @@ $app->post('/extra-team-score/{id}', function ($request, $response, $args) {
     $type = $request->getParsedBodyParam('type', '');
     $score = $request->getParsedBodyParam('score', '');
 
-    $con->query("UPDATE extra_team_score SET inning = '$inning', team_id = '$teamId', over = '$over', type = '$type', score = '$score' WHERE id = $id");
+    $con->query("UPDATE extra_team_score SET inning = '$inning', team_id = '$teamId', `over` = '$over', type = '$type', score = '$score' WHERE id = $id");
 
 
     return $response->withStatus(201)->withJson(["id"=>$id])   ;
@@ -212,7 +218,7 @@ $app->post('/extra-batsman-score', function ($request, $response, $args) {
     $ball = $request->getParsedBodyParam('ball', '');
     $score = $request->getParsedBodyParam('score', '');
 
-    $con->query("INSERT INTO extra_batsman_score(batsman_player_id, over, ball, score) VALUES ('$batsmanPlayerId', '$over', '$ball', '$score')");
+    $con->query("INSERT INTO extra_batsman_score(batsman_player_id, `over`, ball, score) VALUES ('$batsmanPlayerId', '$over', '$ball', '$score')");
 
     $id = $con->insert_id;
 
@@ -235,7 +241,7 @@ $app->post('/extra-batsman-score/{id}', function ($request, $response, $args) {
     $ball = $request->getParsedBodyParam('ball', '');
     $score = $request->getParsedBodyParam('score', '');
 
-    $con->query("UPDATE extra_batsman_score SET batsman_player_id = '$batsmanPlayerId', over = '$over', ball = '$ball', score = '$score' WHERE id = $id");
+    $con->query("UPDATE extra_batsman_score SET batsman_player_id = '$batsmanPlayerId', `over` = '$over', ball = '$ball', score = '$score' WHERE id = $id");
 
 
     return $response->withStatus(201)->withJson(["id"=>$id])   ;
@@ -299,6 +305,21 @@ $app->post('/plain', function ($request, $response, $args) {
     $m = $request->getParsedBodyParam('M', '');
     $n = $request->getParsedBodyParam('N', '');
 
+    $overs = $e;
+    $dirtyOvers = explode('.', $e);
+
+    if(sizeof($dirtyOvers)==2){
+       $overs+= $dirtyOvers[1]/6;
+    }
+
+    $score = $b;
+
+    $rr = $score/$overs;
+    $rr = number_format((float)$rr, 2, '.', '');
+
+    $d = $rr;
+
+
     $isExecuted = $con->query("UPDATE plane SET a='$a',b='$b',c='$c',d='$d',e='$e',f='$f', g='$g',h='$h',i='$i',j='$j',k='$k',l='$l',m='$m',n='$n' WHERE id=1");
 
 //    echo "UPDATE plane SET a='$a',b='$b',c='$c',d='$d',e='$e',f='$f', g='$g',h='$h',i='$i',j='$j',k='$k',l='$l',m='$m',n='$n' WHERE id=1";
@@ -335,9 +356,13 @@ $app->post('/update-player', function ($request, $response, $args) {
     $strikerPlayerId = $request->getParsedBodyParam('striker_player_id', '');
     $nonStrikerPlayerId = $request->getParsedBodyParam('non_striker_player_id', '');
 
-//    addCurrentDetails($bowlerPlayerId,$strikerPlayerId,$nonStrikerPlayerId);
+    $isExecuted = addCurrentDetails($bowlerPlayerId,$strikerPlayerId,$nonStrikerPlayerId);
 
-    return $response->withStatus(201);
+    if ($isExecuted) {
+        $payload = ['id' => 1];
+        return $response->withStatus(201)->withJson($payload);
+    }
+    return $response->withStatus(400);
 });
 
 //score insert
@@ -357,7 +382,7 @@ $app->post('/scores', function ($request, $response, $args) {
     $ball = $request->getParsedBodyParam('ball', '');
     $score = $request->getParsedBodyParam('score', '');
 
-    $con->query("INSERT INTO score(team_id, inning, batsman_player_id, bowler_player_id, over, ball, score) VALUES ('$teamId','$inning','$batsmanPlayerId','$bowlerPlayerId','$over','$ball','$score')");
+    $con->query("INSERT INTO score(team_id, inning, batsman_player_id, bowler_player_id, `over`, ball, score) VALUES ('$teamId','$inning','$batsmanPlayerId','$bowlerPlayerId','$over','$ball','$score')");
 
     return $response->withStatus(201);
 });
@@ -398,7 +423,7 @@ $app->post('/scores/{id}', function ($request, $response, $args) {
     $score = $request->getParsedBodyParam('score', '');
 
 
-    $con->query("UPDATE score SET team_id = '$teamId', inning = '$inning', batsman_player_id = '$batsmanPlayerId', bowler_player_id = '$bowlerPlayerId', over = '$over', ball = '$ball', score = '$score' WHERE id = $id");
+    $con->query("UPDATE score SET team_id = '$teamId', inning = '$inning', batsman_player_id = '$batsmanPlayerId', bowler_player_id = '$bowlerPlayerId', `over` = '$over', ball = '$ball', score = '$score' WHERE id = $id");
 
     return $response->withStatus(201);
 });
@@ -422,5 +447,7 @@ function setSession($type, $id, $displayName)
 
 function addCurrentDetails($bowler, $striker, $nonStriker){
     global $con;
-    $con->query("UPDATE current_detail SET bowler_player_id='$bowler', batsman2_player_id='$nonStriker', striker_player_id='$striker'");
+    $isExecuted = $con->query("UPDATE current_detail SET bowler_player_id='$bowler', batsman2_player_id='$nonStriker', striker_player_id='$striker' WHERE id=1");
+
+    return $isExecuted;
 }

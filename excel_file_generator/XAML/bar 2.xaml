@@ -1,0 +1,7 @@
+<UserControl Width="1920" Height="1080" Panel.ZIndex="500" InputMethod.IsInputMethodEnabled="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mtl="clr-namespace:vMixTitleLibrary;assembly=vMixTitleLibrary">
+  <Grid InputMethod.IsInputMethodEnabled="True">
+    <Image Stretch="Fill" Width="1920" Height="1080" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="0" InputMethod.IsInputMethodEnabled="True" />
+    <Image Source="bar.png" Name="Image1" Width="1916.53585926928" Height="1073.34235453315" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" InputMethod.IsInputMethodEnabled="True" />
+    <mtl:TextBlockDesign Fill="#FF0000FF" FontSize="64" TextAlignment="Center" Text="Text" Name="Text1" Width="1028.79566982409" Height="73.5933303833008" Margin="688.105548037889,937.523680649526,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" InputMethod.IsInputMethodEnabled="True" />
+  </Grid>
+</UserControl>
